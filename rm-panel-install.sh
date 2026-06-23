@@ -35,39 +35,27 @@ if [[ -z "$PANEL_DOMAIN" || -z "$SUB_PANEL_DOMAIN" ]]; then
     exit 1
 fi
 
-echo -e "$PANEL_DOMAIN"
-echo -e "$SUB_PANEL_DOMAIN"
-
-# ТЕСТОВЫЕ КОМАНДЫ ДЛЯ НАСТРОЙКИ
-mkdir /opt/test && cd /opt/test
-curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
-
-ENV_FILE="/opt/test/.env"
-
-sed -i "s|^FRONT_END_DOMAIN=.*$|FRONT_END_DOMAIN=$PANEL_DOMAIN|" "$ENV_FILE"
-sed -i "s|^SUB_PUBLIC_DOMAIN=.*$|SUB_PUBLIC_DOMAIN=$SUB_PANEL_DOMAIN|" "$ENV_FILE"
-
-nano .env
-
-
 #Install Docker if not installed yet
-#sudo curl -fsSL https://get.docker.com | sh
+sudo curl -fsSL https://get.docker.com | sh
 
 #Create project directory
-#mkdir /opt/remnawave && cd /opt/remnawave
+mkdir /opt/remnawave && cd /opt/remnawave
 
 #Download docker-compose.yml and .env.sample by running these commands:
-#curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml
-#curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
+curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml
+curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
 
 #Configure the .env file
 #Generate secret key by running the following commands:
-#sed -i "s/^JWT_AUTH_SECRET=.*/JWT_AUTH_SECRET=$(openssl rand -hex 64)/" .env && sed -i "s/^JWT_API_TOKENS_SECRET=.*/JWT_API_TOKENS_SECRET=$(openssl rand -hex 64)/" .env
-#sed -i "s/^METRICS_PASS=.*/METRICS_PASS=$(openssl rand -hex 64)/" .env && sed -i "s/^WEBHOOK_SECRET_HEADER=.*/WEBHOOK_SECRET_HEADER=$(openssl rand -hex 64)/" .env
+sed -i "s/^JWT_AUTH_SECRET=.*/JWT_AUTH_SECRET=$(openssl rand -hex 64)/" .env && sed -i "s/^JWT_API_TOKENS_SECRET=.*/JWT_API_TOKENS_SECRET=$(openssl rand -hex 64)/" .env
+sed -i "s/^METRICS_PASS=.*/METRICS_PASS=$(openssl rand -hex 64)/" .env && sed -i "s/^WEBHOOK_SECRET_HEADER=.*/WEBHOOK_SECRET_HEADER=$(openssl rand -hex 64)/" .env
 
 #Change the default Postgres password
-#pw=$(openssl rand -hex 24) && sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$pw/" .env && sed -i "s|^\(DATABASE_URL=\"postgresql://postgres:\)[^\@]*\(@.*\)|\1$pw\2|" .env
+pw=$(openssl rand -hex 24) && sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$pw/" .env && sed -i "s|^\(DATABASE_URL=\"postgresql://postgres:\)[^\@]*\(@.*\)|\1$pw\2|" .env
 
-
+#Add user's domain parametrs
+ENV_FILE="/opt/remnawave/.env"
+sed -i "s|^FRONT_END_DOMAIN=.*$|FRONT_END_DOMAIN=$PANEL_DOMAIN|" "$ENV_FILE"
+sed -i "s|^SUB_PUBLIC_DOMAIN=.*$|SUB_PUBLIC_DOMAIN=$SUB_PANEL_DOMAIN|" "$ENV_FILE"
 
 
