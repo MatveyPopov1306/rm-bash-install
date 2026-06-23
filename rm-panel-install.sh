@@ -12,6 +12,7 @@ ERROR="${RED}[ERROR]${RESET}"
 
 PANEL_DOMAIN="" #Addres of your panel domain
 SUB_PANEL_DOMAIN="" #Addres of your subscription domain
+EMAIN_ADDR="test.mail@gmail.com"
 
 #Parsing cycle of two variables
 while [[ $# -gt 0 ]]; do
