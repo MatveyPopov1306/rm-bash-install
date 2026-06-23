@@ -30,4 +30,4 @@ else
     exit 1
 fi
 
-echo -e "\n${GREEN}[OK]${RESET} SSH-password authentification was disabled"
+echo -e "${GREEN}[OK]${RESET} SSH-password authentification was disabled"
