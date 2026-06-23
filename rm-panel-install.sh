@@ -36,7 +36,9 @@ if [[ -z "$PANEL_DOMAIN" || -z "$SUB_PANEL_DOMAIN" ]]; then
 fi
 
 #Install Docker if not installed yet
-sudo curl -fsSL https://get.docker.com | sh
+if ! command -v docker >/dev/null 2>&1; then
+    sudo curl -fsSL https://get.docker.com | sh
+fi
 
 #Create project directory
 mkdir /opt/remnawave && cd /opt/remnawave
