@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo -e "An unknown parameter was passed: $1"
+            echo -e "An unknown parameter was passed: $1. Please check the spelling of the command"
             echo -e "${RED}[ERROR]${RESET} installation was cancelled"
             exit 1
             ;;
