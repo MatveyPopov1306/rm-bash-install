@@ -2,6 +2,7 @@
 
 #Update and upgrade new system
 #sudo apt update -y && sudo apt upgrade -y
+echo "Hello, world"
 echo "$1"  # --port
 echo "$2"  # 10122
 #Change default OpenSSH port to custom 10122 port-ssh
