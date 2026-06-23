@@ -30,7 +30,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 #Change default OpenSSH port to custom 10122 port-ssh
-sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" \ /etc/ssh/sshd_config
+sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" \
+    /etc/ssh/sshd_config
 
 #Reload daemon to activate new SSH port
 sudo systemctl daemon-reload && sudo systemctl restart ssh
@@ -46,11 +47,13 @@ if [[ ! -s /root/.ssh/authorized_keys ]]; then
     exit 1
 fi
 
-sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \ /etc/ssh/sshd_config
+sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
+    /etc/ssh/sshd_config
 
 #Check if the file even exist
 if [[ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]]; then
-    sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \ /etc/ssh/sshd_config.d/50-cloud-init.conf
+    sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \ 
+        /etc/ssh/sshd_config.d/50-cloud-init.conf
 fi
 
 #restart systemclt daemon to apply changes
