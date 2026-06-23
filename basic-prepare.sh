@@ -51,7 +51,7 @@ sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
 
 sudo systemctl daemon-reload && sudo systemctl restart ssh
 
-
+#test
 
 
 
