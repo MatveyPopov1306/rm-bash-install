@@ -47,7 +47,6 @@ else
     echo -e "$OK Sucsessfully installed docker"
 fi
 
-echo 'tets'
 #Create project directory
 mkdir /opt/remnawave > /dev/null 2>&1 && cd /opt/remnawave
 
@@ -68,4 +67,4 @@ ENV_FILE="/opt/remnawave/.env"
 sed -i "s|^FRONT_END_DOMAIN=.*$|FRONT_END_DOMAIN=$PANEL_DOMAIN|" "$ENV_FILE"
 sed -i "s|^SUB_PUBLIC_DOMAIN=.*$|SUB_PUBLIC_DOMAIN=$SUB_PANEL_DOMAIN|" "$ENV_FILE"
 
-
+echo -e "$OK Domain addreses were added to .env file"
