@@ -7,10 +7,10 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
-PANEL_DOMAIN="FRONT_END_DOMAIN" #Default value of your panel domain
-SUB_PANEL_DOMAIN="SUB_PUBLIC_DOMAIN" #Default value of your subscription domain
+PANEL_DOMAIN="" #Addres of your panel domain
+SUB_PANEL_DOMAIN="" #Addres of your subscription domain
 
-#Parsing cycle
+#Parsing cycle of two variables
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --domain)
@@ -28,6 +28,12 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+#Check if user gave us values, else abort
+if [[ -z "$PANEL_DOMAIN" || -z "$SUB_PANEL_DOMAIN" ]]; then
+    echo -e "${RED}[ERROR]${RESET} --domain and --subdomain are required"
+    exit 1
+fi
 
 echo -e "$PANEL_DOMAIN"
 echo -e "$SUB_PANEL_DOMAIN"
