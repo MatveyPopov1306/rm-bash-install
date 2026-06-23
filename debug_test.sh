@@ -33,3 +33,10 @@ sed -i "s|^#\?Port .*$|Port ${PORT}|" "$FILE"
 
 #Reload daemon to activate new SSH port
 sudo systemctl daemon-reload && sudo systemctl restart ssh
+#Show current listening ports
+
+clear
+echo -e "Default OpenSSH port: 22 was changed to $PORT"
+echo -e "Listening ports are listed below:"
+ss -ntpl
+
