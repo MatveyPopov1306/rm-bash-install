@@ -27,3 +27,7 @@ curl -fsSL -H "Cache-Control: no-cache" \
 | bash -s
 ```
 
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rmpanel_reverse_proxy.sh)
+```
+
