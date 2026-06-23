@@ -24,22 +24,22 @@ else
 fi
 
 #Install acme.sh with custom email
-curl https://get.acme.sh | sh -s email=$EMAIN_ADDR && source ~/.bashrc
+#curl https://get.acme.sh | sh -s email=$EMAIN_ADDR && source ~/.bashrc
 
 #Create a folder for the certificates
-mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
+#mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
 
 #Set Let'sencrypt for issue ssl sertificate
-acme.sh --set-default-ca --server letsencrypt
+#acme.sh --set-default-ca --server letsencrypt
 
 #Issue a certificate
-acme.sh --issue --standalone -d "$PANEL_DOMAIN" --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem --reloadcmd "docker exec remnawave-nginx nginx -s reload"
+#acme.sh --issue --standalone -d "$PANEL_DOMAIN" --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem --reloadcmd "docker exec remnawave-nginx nginx -s reload"
 
 #This shows that the certificate is issued. Acme.sh will take care of automatically renewing the certificate every 60 days
-acme.sh --install-cert -d "$PANEL_DOMAIN" --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem --reloadcmd "docker exec remnawave-nginx nginx -s reload"
+#acme.sh --install-cert -d "$PANEL_DOMAIN" --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem --reloadcmd "docker exec remnawave-nginx nginx -s reload"
 
 #Create a file called nginx.conf in the /opt/remnawave/nginx directory
-cd /opt/remnawave/nginx && nano nginx.conf
+cd /opt/remnawave/nginx && curl -o nginx.conf https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/nginx.conf > /dev/null 2>&1
 
 
 
