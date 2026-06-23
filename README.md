@@ -1,7 +1,8 @@
 # Remnawave and prepare installation
 
 
-##Basic vps preparation
+## Quick Install
+
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/basic-prepare.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/basic-prepare.sh | sudo bash -s -- --port 10122
 ```
