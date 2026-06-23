@@ -8,7 +8,7 @@ BLUE='\e[34m'
 RESET='\e[0m'
 
 #Update and upgrade new system
-sudo apt update -y && sudo apt upgrade -y
+#sudo apt update -y && sudo apt upgrade -y
 
 PORT="10122" #Default value of OpenSSH port
 
@@ -39,3 +39,26 @@ clear
 echo -e "Default OpenSSH port: 22 was changed to $PORT"
 echo -e "Listening ports are listed below:"
 ss -ntpl
+
+#Disable ssh-password authentification
+
+FILE="/etc/ssh/sshd_config"
+sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
+
+FILE="/etc/ssh/sshd_config.d/50-cloud-init.conf"
+sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
+
+#sudo systemctl daemon-reload && sudo systemctl restart ssh
+
+
+
+
+
+
+
+
+
+
+
+
+
