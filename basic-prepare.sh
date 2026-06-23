@@ -23,6 +23,12 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+#Check if personal ssh-key avaliable on vm, else exit script
+if [[ ! -s /root/.ssh/authorized_keys ]]; then
+    echo -e "${RED}No SSH key found for root. Aborting....${RESET}"
+    exit 1
+fi
+
 #Update and upgrade new system
 sudo apt update -y && sudo apt upgrade -y
 clear
@@ -41,7 +47,7 @@ echo -e "${GREEN}[OK]${RESET} Default OpenSSH port was changed to $SSHPORT"
 
 #Check if personal ssh-key avaliable on vm, else exit script
 if [[ ! -s /root/.ssh/authorized_keys ]]; then
-    echo -e "\e[31mNo SSH key found for root. Aborting.\e[0m"
+    echo -e "${RED}No SSH key found for root. Aborting.\e[0m"
     exit 1
 fi
 
