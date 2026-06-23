@@ -33,3 +33,4 @@ sed -i "s|^#\?Port .*$|Port ${PORT}|" "$FILE"
 
 #Reload daemon to activate new SSH port
 sudo systemctl daemon-reload && sudo systemctl restart ssh
+ss -ntpl
