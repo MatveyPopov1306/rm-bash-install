@@ -7,7 +7,7 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
-SSHPORT="22" #Default new value of OpenSSH port
+SSHPORT="10122" #Default new value of OpenSSH port
 #Parsing cycle
 while [[ $# -gt 0 ]]; do
     case "$1" in
