@@ -20,7 +20,8 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo -e "An unknown parameter was passed: $1, ${RED}canceling installation${RESET}"
+            echo -e "An unknown parameter was passed: $1"
+            echo -e "${RED}[ERROR]${RESET} installation was cancelled"
             exit 1
             ;;
     esac
