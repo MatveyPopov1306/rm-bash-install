@@ -10,7 +10,7 @@ RESET='\e[0m'
 #Update and upgrade new system
 sudo apt update -y && sudo apt upgrade -y
 
-PORT="22" #Default value of OpenSSH port
+PORT="10122" #Default value of OpenSSH port
 
 #Parsing cycle
 while [[ $# -gt 0 ]]; do
