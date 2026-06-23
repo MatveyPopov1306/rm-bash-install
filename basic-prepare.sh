@@ -41,20 +41,34 @@ echo -e "Listening ports are listed below:"
 ss -ntpl
 
 #Disable ssh-password authentification
+#Check if personal ssh-key avaliable on vm, else exit script
 if [[ ! -s /root/.ssh/authorized_keys ]]; then
     echo -e "\e[31mNo SSH key found for root. Aborting.\e[0m"
     exit 1
 fi
 
-FILE="/etc/ssh/sshd_config"
-sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
+sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
+    /etc/ssh/sshd_config
+#FILE="/etc/ssh/sshd_config"
+#sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
 
-FILE="/etc/ssh/sshd_config.d/50-cloud-init.conf"
-sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
+if [[ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]]; then
+    sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
+        /etc/ssh/sshd_config.d/50-cloud-init.conf
+fi
+#FILE="/etc/ssh/sshd_config.d/50-cloud-init.conf"
+#sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
 
-sudo systemctl daemon-reload && sudo systemctl restart ssh
-echo -e "SSH-password authentification was disabled"
-#test
+#restart systemclt daemon to apply changes
+if sshd -t; then
+    systemctl restart ssh
+else
+    echo -e "${RED}SSH config contains errors${RESET}"
+    exit 1
+fi
+
+#sudo systemctl daemon-reload && sudo systemctl restart ssh
+#echo -e "SSH-password authentification was disabled"
 
 
 
