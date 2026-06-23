@@ -65,8 +65,10 @@ fi
 echo -e "${GREEN}[OK]${RESET} SSH-password authentification was disabled"
 
 
-
 UFW_RULES_FILE="/etc/ufw/before.rules"
+
+#Reset ufw setting before setting up
+sudo ufw --force reset > /dev/null 2>&1
 
 # Change ACCEPT to DROP in icmp code for INPUT
 sed -i 's/-A ufw-before-input -p icmp --icmp-type destination-unreachable -j ACCEPT/-A ufw-before-input -p icmp --icmp-type destination-unreachable -j DROP/' "$UFW_RULES_FILE"
