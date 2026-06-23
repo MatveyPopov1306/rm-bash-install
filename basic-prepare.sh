@@ -11,7 +11,7 @@ RESET='\e[0m'
 #echo "Hello, world"
 
 #Default value of OpenSSH port
-PORT="12" 
+PORT="22" 
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -29,5 +29,6 @@ done
 
 #Change default OpenSSH port to custom 10122 port-ssh
 FILE="/etc/ssh/sshd_config"
-sed -i 's/^#\?Port .*$/Port $PORT/' "$FILE"
+sed -i "s|^#\?Port .*$|Port ${PORT}|" "$FILE"
+#sed -i 's/^#\?Port .*$/Port $PORT/' "$FILE"
 #test
