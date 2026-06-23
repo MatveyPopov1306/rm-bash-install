@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+RED='\e[31m'
+GREEN='\e[32m'
+YELLOW='\e[33m'
+BLUE='\e[34m'
+RESET='\e[0m'
+
 #Update and upgrade new system
 #sudo apt update -y && sudo apt upgrade -y
 echo "Hello, world"
@@ -14,7 +20,7 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo "Неизвестный параметр: $1"
+            echo -e "${RED}An unknown parameter was passed: $1, canceling installation${RED}"
             exit 1
             ;;
     esac
