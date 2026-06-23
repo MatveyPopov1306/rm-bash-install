@@ -41,7 +41,7 @@ echo -e "Listening ports are listed below:"
 ss -ntpl
 
 #Disable ssh-password authentification
-echo -e "\nSSH-password authentification was disabled"
+echo -e "SSH-password authentification was disabled"
 
 FILE="/etc/ssh/sshd_config"
 sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
