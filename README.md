@@ -20,3 +20,10 @@ curl -fsSL -H "Cache-Control: no-cache" \
 "https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh" \
 | bash -s -- --domain PLACE_YOUR_DOMAIN --subdomain PLACE_YOUR_SUBDOMAIN
 ```
+
+```bash
+curl -fsSL -H "Cache-Control: no-cache" \
+"https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rmpanel_reverse_proxy" \
+| bash -s
+```
+
