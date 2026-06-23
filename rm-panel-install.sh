@@ -38,6 +38,18 @@ fi
 echo -e "$PANEL_DOMAIN"
 echo -e "$SUB_PANEL_DOMAIN"
 
+# ТЕСТОВЫЕ КОМАНДЫ ДЛЯ НАСТРОЙКИ
+mkdir /opt/test && cd /opt/test
+curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
+
+ENV_FILE="/opt/test/.env"
+
+sed -i "s|^FRONT_END_DOMAIN=.*$|FRONT_END_DOMAIN=$PANEL_DOMAIN|" "$ENV_FILE"
+sed -i "s|^SUB_PUBLIC_DOMAIN=.*$|SUB_PUBLIC_DOMAIN=$SUB_PANEL_DOMAIN|" "$ENV_FILE"
+
+nano .env
+
+
 #Install Docker if not installed yet
 #sudo curl -fsSL https://get.docker.com | sh
 
