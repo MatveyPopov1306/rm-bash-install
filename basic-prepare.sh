@@ -7,18 +7,12 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
-#Update and upgrade new system
-sudo apt update -y && sudo apt upgrade -y
-clear
-echo -e "${GREEN}[OK]${RESET} System was sucsessfully updated"
-
-SSHPORT="10122" #Default new value of OpenSSH port
-
+SSHPORT="22" #Default new value of OpenSSH port
 #Parsing cycle
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --port)
-            PORT="$2"
+            SSHPORT="$2"
             shift 2
             ;;
         *)
@@ -28,6 +22,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+#Update and upgrade new system
+sudo apt update -y && sudo apt upgrade -y
+clear
+echo -e "${GREEN}[OK]${RESET} System was sucsessfully updated"
 
 #Change default OpenSSH port to custom 10122 port-ssh
 sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "/etc/ssh/sshd_config"
