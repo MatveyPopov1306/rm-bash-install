@@ -11,4 +11,4 @@ RESET='\e[0m'
 sudo apt update -y && sudo apt upgrade -y
 
 clear
-echo -e "\n${GREEN}System was sucsessfully updated${RESET}\n"
+echo -e "${GREEN}[OK]${RESET} System was sucsessfully updated"
