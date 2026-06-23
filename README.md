@@ -14,3 +14,9 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh) 
 ```
+
+```bash
+curl -fsSL -H "Cache-Control: no-cache" \
+"https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh" \
+| bash -s -- --domain mydomain.com --subdomain mysubdomain.com
+```
