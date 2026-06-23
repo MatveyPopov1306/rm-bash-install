@@ -30,3 +30,4 @@ done
 #Change default OpenSSH port to custom 10122 port-ssh
 FILE="/etc/ssh/sshd_config"
 sed -i 's/^#\?Port .*$/Port $PORT/' "$FILE"
+#test
