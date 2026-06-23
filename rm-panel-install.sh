@@ -36,8 +36,12 @@ if [[ -z "$PANEL_DOMAIN" || -z "$SUB_PANEL_DOMAIN" ]]; then
 fi
 
 #Install Docker if not installed yet
-if ! command -v docker >/dev/null 2>&1; then
-    sudo curl -fsSL https://get.docker.com | sh
+if command -v docker >/dev/null 2>&1; then
+    echo -e "${GREEN}[OK]${RESET} You already have docker installed"
+else
+    curl -fsSL https://get.docker.com | sh
+    clear
+    echo -e "${GREEN}[OK]${RESET} Sucsessfully installed docker"
 fi
 
 #Create project directory
