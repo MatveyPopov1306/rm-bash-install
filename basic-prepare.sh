@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#Shortcuts of colors
 RED='\e[31m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
@@ -7,12 +8,11 @@ BLUE='\e[34m'
 RESET='\e[0m'
 
 #Update and upgrade new system
-#sudo apt update -y && sudo apt upgrade -y
-#echo "Hello, world"
+sudo apt update -y && sudo apt upgrade -y
 
-#Default value of OpenSSH port
-PORT="22" 
+PORT="22" #Default value of OpenSSH port
 
+#Parsing cycle
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --port)
@@ -30,5 +30,6 @@ done
 #Change default OpenSSH port to custom 10122 port-ssh
 FILE="/etc/ssh/sshd_config"
 sed -i "s|^#\?Port .*$|Port ${PORT}|" "$FILE"
-#sed -i 's/^#\?Port .*$/Port $PORT/' "$FILE"
-#test
+
+#Reload daemon to activate new SSH port
+sudo systemctl daemon-reload && sudo systemctl restart ssh
