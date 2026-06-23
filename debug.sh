@@ -9,4 +9,4 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 #Disable server ping
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/disable_ping_server.sh)
 #Firewall settings
-bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/ufw_editing.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/ufw_config.sh)
