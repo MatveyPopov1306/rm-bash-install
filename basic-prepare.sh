@@ -41,7 +41,10 @@ echo -e "Listening ports are listed below:"
 ss -ntpl
 
 #Disable ssh-password authentification
-echo -e "SSH-password authentification was disabled"
+if [[ ! -s /root/.ssh/authorized_keys ]]; then
+    echo -e "\e[31mNo SSH key found for root. Aborting.\e[0m"
+    exit 1
+fi
 
 FILE="/etc/ssh/sshd_config"
 sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
@@ -50,7 +53,7 @@ FILE="/etc/ssh/sshd_config.d/50-cloud-init.conf"
 sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" "$FILE"
 
 sudo systemctl daemon-reload && sudo systemctl restart ssh
-
+echo -e "SSH-password authentification was disabled"
 #test
 
 
