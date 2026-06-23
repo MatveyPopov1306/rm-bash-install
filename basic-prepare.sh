@@ -4,5 +4,5 @@
 #sudo apt update -y && sudo apt upgrade -y
 
 #Change default OpenSSH port to custom 10122 port-ssh
-FILE="/opt/test/test.txt"
-sed -i 's/^#Port 22$/Port 10122/' "$FILE"
+FILE="/etc/ssh/sshd_config"
+sed -i 's/^#\?Port .*$/Port 10122/' "$FILE"
