@@ -32,6 +32,6 @@ sed -i "s|^#\?Port .*$|Port ${PORT}|" "$FILE"
 sudo systemctl daemon-reload && sudo systemctl restart ssh
 
 #Show current listening ports
-echo -e "Default OpenSSH port: 22 was changed to $PORT"
-echo -e "Listening ports are listed below:"
-ss -ntpl
+echo -e "${GREEN}[OK]${RESET} Default OpenSSH port was changed to $PORT"
+#echo -e "Listening ports are listed below:"
+#ss -ntpl
