@@ -49,11 +49,11 @@ fi
 
 echo 'tets'
 #Create project directory
-mkdir /opt/remnawave && cd /opt/remnawave
+mkdir /opt/remnawave > /dev/null 2>&1 && cd /opt/remnawave
 
 #Download docker-compose.yml and .env.sample by running these commands:
-curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml
-curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample
+curl -o docker-compose.yml https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/docker-compose-prod.yml > /dev/null 2>&1
+curl -o .env https://raw.githubusercontent.com/remnawave/backend/refs/heads/main/.env.sample > /dev/null 2>&1
 
 #Configure the .env file
 #Generate secret key by running the following commands:
