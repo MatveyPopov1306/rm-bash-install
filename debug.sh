@@ -2,3 +2,5 @@
 
 #Basic update of system
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/updatevm.sh)
+#Change default ssh port to custom
+bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/change_default-ssh.sh)
