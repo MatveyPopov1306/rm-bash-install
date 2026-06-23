@@ -18,7 +18,7 @@ EMAIN_ADDR="test.mail@gmail.com"
 
 #Install dependencies Socat
 if command -v socat >/dev/null 2>&1; then
-    echo "$OK Cron and socat already installed"
+    echo -e "$OK Cron and socat already installed"
 else
     sudo apt-get install -y cron socat
 fi
