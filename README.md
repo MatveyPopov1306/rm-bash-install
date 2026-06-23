@@ -12,11 +12,11 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 
 ## Remnawave panel installation
 ```bash
-bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh) 
+bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh) --domain PLACE_YOUR_DOMAIN --subdomain PLACE_YOUR_SUBDOMAIN
 ```
 
 ```bash
 curl -fsSL -H "Cache-Control: no-cache" \
 "https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh" \
-| bash -s -- --domain mydomain.com --subdomain mysubdomain.com
+| bash -s -- --domain PLACE_YOUR_DOMAIN --subdomain PLACE_YOUR_SUBDOMAIN
 ```
