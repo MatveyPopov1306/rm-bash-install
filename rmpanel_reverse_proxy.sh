@@ -27,7 +27,7 @@ fi
 #curl https://get.acme.sh | sh -s email=$EMAIN_ADDR && source ~/.bashrc
 
 #Create a folder for the certificates
-#mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
+mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
 
 #Set Let'sencrypt for issue ssl sertificate
 #acme.sh --set-default-ca --server letsencrypt
