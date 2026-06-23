@@ -10,3 +10,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/basic-prepare.sh) --port 10122
 ```
 
+## Remnawave panel installation
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh) 
+```
