@@ -7,6 +7,9 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
+OK="${GREEN}[OK]${RESET}"
+ERROR="${RED}[ERROR]${RESET}"
+
 PANEL_DOMAIN="" #Addres of your panel domain
 SUB_PANEL_DOMAIN="" #Addres of your subscription domain
 
@@ -23,7 +26,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo -e "An unknown parameter was passed: $1. Please check the spelling of the command"
-            echo -e "${RED}[ERROR]${RESET} installation was cancelled"
+            echo -e "$ERROR installation was cancelled"
             exit 1
             ;;
     esac
@@ -31,19 +34,20 @@ done
 
 #Check if user gave us values, else abort
 if [[ -z "$PANEL_DOMAIN" || -z "$SUB_PANEL_DOMAIN" ]]; then
-    echo -e "${RED}[ERROR]${RESET} --domain and --subdomain are required"
+    echo -e "$ERROR --domain and --subdomain are required"
     exit 1
 fi
 
 #Install Docker if not installed yet
 if command -v docker >/dev/null 2>&1; then
-    echo -e "${GREEN}[OK]${RESET} You already have docker installed"
+    echo -e "$OK Docker is already installed"
 else
     curl -fsSL https://get.docker.com | sh
     clear
-    echo -e "${GREEN}[OK]${RESET} Sucsessfully installed docker"
+    echo -e "$OK Sucsessfully installed docker"
 fi
 
+echo 'tets'
 #Create project directory
 mkdir /opt/remnawave && cd /opt/remnawave
 
