@@ -31,7 +31,7 @@ mkdir -p /opt/remnawave/nginx && cd /opt/remnawave/nginx
 
 #Set Let'sencrypt for issue ssl sertificate
 #acme.sh --set-default-ca --server letsencrypt
-
+#t
 #Issue a certificate
 #acme.sh --issue --standalone -d "$PANEL_DOMAIN" --key-file /opt/remnawave/nginx/privkey.key --fullchain-file /opt/remnawave/nginx/fullchain.pem --reloadcmd "docker exec remnawave-nginx nginx -s reload"
 
