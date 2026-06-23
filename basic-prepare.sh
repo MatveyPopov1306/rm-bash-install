@@ -20,13 +20,14 @@ while [[ $# -gt 0 ]]; do
             shift 2
             ;;
         *)
-            echo -e "An unknown parameter was passed: $1, ${RED}canceling installation${RESET}[0m"
+            echo -e "An unknown parameter was passed: $1, ${RED}canceling installation${RESET}"
             exit 1
             ;;
     esac
 done
 
 echo "$PORT"
+echo "Обычный текст"
 
 #Change default OpenSSH port to custom 10122 port-ssh
 #FILE="/etc/ssh/sshd_config"
