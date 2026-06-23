@@ -27,6 +27,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 echo "$PORT"
+echo -e "${GREEN}[OK]${RESET} Установка завершена"
 echo "Обычный текст"
 
 #Change default OpenSSH port to custom 10122 port-ssh
