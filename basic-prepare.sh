@@ -3,22 +3,8 @@
 #Update and upgrade new system
 #sudo apt update -y && sudo apt upgrade -y
 
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        --port)
-            PORT="$2"
-            shift 2
-            ;;
-        --user)
-            USERNAME="$2"
-            shift 2
-            ;;
-        *)
-            echo "Неизвестный параметр: $1"
-            exit 1
-            ;;
-    esac
-done
+echo "$1"  # --port
+echo "$2"  # 10122
 
 #Change default OpenSSH port to custom 10122 port-ssh
 #FILE="/etc/ssh/sshd_config"
