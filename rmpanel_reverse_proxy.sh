@@ -45,4 +45,4 @@ cd /opt/remnawave/nginx && curl -o nginx.conf https://raw.githubusercontent.com/
 
 sed -i "s|^server_name REPLACE_WITH_YOUR_DOMAIN;$|server_name $PANEL_DOMAIN;|" "$nginx_cfg_path"
 
-nano /opt/remnawave/nginx/nginx.conf
+nano $nginx_cfg_path
