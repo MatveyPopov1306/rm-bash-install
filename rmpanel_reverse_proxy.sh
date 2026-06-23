@@ -43,6 +43,6 @@ nginx_cfg_path="/opt/remnawave/nginx/nginx.conf"
 #Create a file called nginx.conf in the /opt/remnawave/nginx directory
 cd /opt/remnawave/nginx && curl -o nginx.conf https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/nginx.conf > /dev/null 2>&1
 
-sed -i "s|^server_name.*$|server_name $PANEL_DOMAIN;|" "$nginx_cfg_path"
+sed -i "s|^server_name REPLACE_WITH_YOUR_DOMAIN;$|server_name $PANEL_DOMAIN;|" "$nginx_cfg_path"
 
 nano /opt/remnawave/nginx/nginx.conf
