@@ -7,6 +7,9 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
+OK="${GREEN}[OK]${RESET}"
+ERROR="${RED}[ERROR]${RESET}"
+
 SSHPORT="10122" #Default new value of OpenSSH port
 #Parsing cycle
 while [[ $# -gt 0 ]]; do
@@ -17,7 +20,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo -e "An unknown parameter was passed: $1"
-            echo -e "${RED}[ERROR]${RESET} installation was cancelled"
+            echo -e "$ERROR installation was cancelled"
             exit 1
             ;;
     esac
@@ -32,7 +35,7 @@ fi
 #Update and upgrade new system
 sudo apt update -y && sudo apt upgrade -y
 clear
-echo -e "${GREEN}[OK]${RESET} System was sucsessfully updated"
+echo -e "$OK System was sucsessfully updated"
 
 #Change default OpenSSH port to custom 10122 port-ssh
 sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "/etc/ssh/sshd_config"
@@ -41,16 +44,9 @@ sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "/etc/ssh/sshd_config"
 sudo systemctl daemon-reload && sudo systemctl restart ssh
 
 #Show current listening ports
-echo -e "${GREEN}[OK]${RESET} Default OpenSSH port was changed to $SSHPORT"
-#echo -e "Listening ports are listed below:"
-#ss -ntpl
+echo -e "$OK Default OpenSSH port was changed to $SSHPORT"
 
-#Check if personal ssh-key avaliable on vm, else exit script
-if [[ ! -s /root/.ssh/authorized_keys ]]; then
-    echo -e "${RED}No SSH key found for root. Aborting.\e[0m"
-    exit 1
-fi
-
+#Disable password authentification
 sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
     /etc/ssh/sshd_config
 
@@ -68,7 +64,7 @@ else
     exit 1
 fi
 
-echo -e "${GREEN}[OK]${RESET} SSH-password authentification was disabled"
+echo -e "$OK SSH-password authentification was disabled"
 
 
 UFW_RULES_FILE="/etc/ufw/before.rules"
@@ -91,7 +87,7 @@ sed -i 's/-A ufw-before-forward -p icmp --icmp-type time-exceeded -j ACCEPT/-A u
 sed -i 's/-A ufw-before-forward -p icmp --icmp-type parameter-problem -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type parameter-problem -j DROP/' "$UFW_RULES_FILE"
 sed -i 's/-A ufw-before-forward -p icmp --icmp-type echo-request -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type echo-request -j DROP/' "$UFW_RULES_FILE"
 
-echo -e "${GREEN}[OK]${RESET} Server ping was disabled"
+echo -e "$OK Server ping was disabled"
 
 #Setting up an ufw
 sudo ufw default deny incoming > /dev/null 2>&1
@@ -104,7 +100,7 @@ sudo ufw allow $SSHPORT/tcp > /dev/null 2>&1
 
 sudo ufw --force enable > /dev/null 2>&1
 
-echo -e "${GREEN}[OK]${RESET} Firewall was configured and enabled\n"
+echo -e "$OK Firewall was configured and enabled\n"
 
 
 
