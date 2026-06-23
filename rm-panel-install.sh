@@ -68,3 +68,4 @@ sed -i "s|^FRONT_END_DOMAIN=.*$|FRONT_END_DOMAIN=$PANEL_DOMAIN|" "$ENV_FILE"
 sed -i "s|^SUB_PUBLIC_DOMAIN=.*$|SUB_PUBLIC_DOMAIN=$SUB_PANEL_DOMAIN|" "$ENV_FILE"
 
 echo -e "$OK Domain addreses were added to .env file"
+#a
