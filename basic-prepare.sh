@@ -33,8 +33,17 @@ if [[ ! -s /root/.ssh/authorized_keys ]]; then
 fi
 
 #Update and upgrade new system
-sudo apt update -y && sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
+
+#Check if UFW is install on VM
+if ! command -v ufw >/dev/null 2>&1; then
+    sudo apt install -y ufw
+fi
+
+#Refresh screen after updates
 clear
+
 echo -e "$OK System was sucsessfully updated"
 
 #Change default OpenSSH port to custom 10122 port-ssh
