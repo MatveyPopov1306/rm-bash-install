@@ -6,6 +6,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 ```
 
 ## Installation with paremeters
+Note: if you don't provide any arguments to installation script, the custom port would be "10122"
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/basic-prepare.sh) --port 10122
 ```
