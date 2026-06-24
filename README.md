@@ -12,6 +12,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-instal
 ```
 
 ## Remnawave panel installation
+Note: it's necessary to provide domain and subdomain addreses
 ```bash
 bash <(curl -Ls https://raw.githubusercontent.com/MatveyPopov1306/rm-bash-install/main/rm-panel-install.sh) --domain PLACE_YOUR_DOMAIN --subdomain PLACE_YOUR_SUBDOMAIN
 ```
