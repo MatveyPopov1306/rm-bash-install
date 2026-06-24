@@ -36,6 +36,12 @@ fi
 sudo apt update -y
 sudo apt upgrade -y
 
+#TO THINK
+#apt-get -y \
+#    -o Dpkg::Options::="--force-confdef" \
+#    -o Dpkg::Options::="--force-confold" \
+#    dist-upgrade
+
 #Check if UFW is install on VM
 if ! command -v ufw >/dev/null 2>&1; then
     sudo apt install -y ufw
