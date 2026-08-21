@@ -57,7 +57,7 @@ update_system(){
 
 create_user() {
 	if id "$USERNAME" &>/dev/null; then
-		echo "$WARNING User $USERNAME already exists, skipping."
+		echo -e "$WARNING User $USERNAME already exists, skipping."
 	else
 		sudo useradd -m -s /bin/bash "$USERNAME" 2>/dev/null || true
 		echo "$USERNAME:$PASSWORD" | sudo chpasswd
