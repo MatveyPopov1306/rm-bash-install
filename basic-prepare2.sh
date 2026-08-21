@@ -66,13 +66,33 @@ create_user() {
 	fi
 }
 
+setup_authorized_keys() {
+    local user="$USERNAME"
+    local ssh_dir="/home/$user/.ssh"
+    local auth_keys="$ssh_dir/authorized_keys"
+
+    if [[ -f "$auth_keys" ]] && \
+       [[ "$(stat -c %a "$auth_keys")" == "600" ]] && \
+       [[ "$(stat -c %a "$ssh_dir")" == "700" ]]; then
+		sudo nano "$auth_keys"
+        echo "authorized_keys already exists with correct permissions."
+        return
+    fi
+
+    sudo mkdir -p "$ssh_dir"
+    sudo touch "$auth_keys"
+
+    sudo chmod 700 "$ssh_dir"
+    sudo chmod 600 "$auth_keys"
+    sudo chown -R "$user:$user" "$ssh_dir"
+
+    sudo nano "$auth_keys"
+}
+
 main(){
 	update_system
 	create_user
+	setup_authorized_keys
 }
 
 main
-
-
-
-
