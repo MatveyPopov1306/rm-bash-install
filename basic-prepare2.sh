@@ -17,6 +17,8 @@ SSHPORT="10122"
 SKIPUPDATE=false
 SKIP_SSH_KEY_SETUP=false
 
+sshd_config_path="/etc/ssh/sshd_config"
+
 # Parsing cycle
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -102,7 +104,6 @@ change_default_ssh_port() {
 
 	local sshd_cfg_backup="sshd_config_backup"
 	local ssh_path="/etc/ssh/"
-	local sshd_config_path="/etc/ssh/sshd_config"
 	
 	#check is there are any backup version of sshd_config
 	if [ -e "$ssh_path$sshd_cfg_backup" ]; then
@@ -139,6 +140,17 @@ change_permit_root_login() {
 	#Disable root login
 	sed -i "s|^#\?PermitRootLogin .*$|PermitRootLogin no|" \
 		/etc/ssh/sshd_config
+		
+	echo -e "$OK Root login was disabled."
+}
+
+set_list_allow_users() {
+	if grep -qxF "AllowUsers $USERNAME" "$sshd_config_path"; then
+		echo "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
+	else
+		echo "AllowUsers $USERNAME" >> "$sshd_config_path"
+		echo -e "$OK Login was enabled only for $USERNAME"
+	fi
 }
 
 ssh_reload() {
@@ -153,6 +165,7 @@ main(){
 	change_default_ssh_port
 	change_password_authentication
 	change_permit_root_login
+	set_list_allow_users
 	#ssh_reload
 }
 
