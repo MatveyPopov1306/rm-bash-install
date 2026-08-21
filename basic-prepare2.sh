@@ -146,7 +146,7 @@ main(){
 	setup_authorized_keys
 	change_default_ssh_port
 	change_password_authentication
-	ssh_reload
+	#ssh_reload
 }
 
 main
