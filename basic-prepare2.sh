@@ -114,11 +114,17 @@ change_default_ssh_port() {
 	echo -e "$OK Default OpenSSH port was changed to $SSHPORT"
 }
 
+ssh_reload() {
+	#Reload daemon to activate new SSH port
+	sudo systemctl daemon-reload && sudo systemctl restart ssh
+}
+
 main(){
 	update_system
 	create_user
 	setup_authorized_keys
-	#change_default_ssh_port
+	change_default_ssh_port
+	#ssh_reload
 }
 
 main
