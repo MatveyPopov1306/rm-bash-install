@@ -12,7 +12,7 @@ ERROR="${RED}[ERROR]${RESET}"
 WARNING="${YELLOW}[WARNING]${RESET}"
 
 USERNAME="admin"
-PASSWORD=''
+PASSWORD=""
 SSHPORT="10122"
 SKIPUPDATE=false
 
@@ -63,6 +63,7 @@ create_user() {
 		echo "$USERNAME:$PASSWORD" | sudo chpasswd
 		sudo usermod -aG sudo "$USERNAME"
 		sudo -iu "$USERNAME"
+		echo -e "$OK User $USERNAME was successfully created."
 	fi
 }
 
