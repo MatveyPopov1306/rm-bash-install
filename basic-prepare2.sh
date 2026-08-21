@@ -9,20 +9,60 @@ RESET='\e[0m'
 
 OK="${GREEN}[OK]${RESET}"
 ERROR="${RED}[ERROR]${RESET}"
+WARNING="${YELLOW}[WARNING]${YELLOW}"
 
 USERNAME="admin"
-PASSWORD='Qm@11PsL'
+PASSWORD=''
+SSHPORT="10122"
+SKIPUPDATE=false
+
+#Parsing cycle
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --username)
+            USERNAME="$2"
+            shift 2
+            ;;
+		--userpassword)
+            PASSWORD="$2"
+            shift 2
+            ;;
+		--sshport)
+            SSHPORT="$2"
+            shift 2
+            ;;
+		--skip-update)
+            SKIPUPDATE="$2"
+            shift 2
+            ;;
+        *)
+            echo -e "An unknown parameter was passed: $1"
+            echo -e "$ERROR installation was cancelled"
+            exit 1
+            ;;
+    esac
+done
 
 update_system(){
-	sudo apt update
-	sudo apt upgrade -y
+
+	if [ "$SKIPUPDATE" = true ]; then
+		sudo apt update
+		sudo apt upgrade -y
+		clear
+		echo -e "$OK System was sucsessfully updated"
+	fi
 }
 
 create_user() {
-    sudo useradd -m -s /bin/bash "$USERNAME" 2>/dev/null || true
-	echo "$USERNAME:$PASSWORD" | sudo chpasswd
-	sudo usermod -aG sudo "$USERNAME"
-	sudo -iu "$USERNAME"
+
+	if id "$USERNAME" &>/dev/null; then
+		echo "$WARNING User $USERNAME already exists, skipping."
+	else
+		sudo useradd -m -s /bin/bash "$USERNAME" 2>/dev/null || true
+		echo "$USERNAME:$PASSWORD" | sudo chpasswd
+		sudo usermod -aG sudo "$USERNAME"
+		sudo -iu "$USERNAME"
+	fi
 }
 
 main(){
