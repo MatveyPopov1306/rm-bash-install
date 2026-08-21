@@ -7,9 +7,9 @@ YELLOW='\e[33m'
 BLUE='\e[34m'
 RESET='\e[0m'
 
-OK="${GREEN}[OK]${RESET}\t"
-ERROR="${RED}[ERROR]${RESET}\t"
-WARNING="${YELLOW}[WARNING]${RESET}\t"
+OK="${GREEN}[OK]${RESET}"
+ERROR="${RED}[ERROR]${RESET}"
+WARNING="${YELLOW}[WARNING]${RESET}"
 
 USERNAME="admin"
 PASSWORD="password"
@@ -141,12 +141,12 @@ change_permit_root_login() {
 	sed -i "s|^#\?PermitRootLogin .*$|PermitRootLogin no|" \
 		/etc/ssh/sshd_config
 		
-	echo -e "$OK Root login was disabled."
+	echo -e "$OK\tRoot login was disabled."
 }
 
 set_list_allow_users() {
 	if grep -qxF "AllowUsers $USERNAME" "$sshd_config_path"; then
-		echo -e "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
+		echo -e "$WARNING\tAllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
 	else
 		echo "AllowUsers $USERNAME" >> "$sshd_config_path"
 		echo -e "$OK Login was enabled only for $USERNAME"
