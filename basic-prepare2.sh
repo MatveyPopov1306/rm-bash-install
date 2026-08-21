@@ -43,7 +43,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-update_system(){
+update_system() {
 	if [ "$SKIPUPDATE" = true ]; then
 		clear
 		echo -e "$WARNING Skipped update becatuse of parameter --skip-update: $SKIPUPDATE"
@@ -113,6 +113,20 @@ change_default_ssh_port() {
 	fi
 }
 
+change_password_authentication() {
+	#Disable password authentification
+	sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
+		/etc/ssh/sshd_config
+
+	#Check if the file even exist
+	if [[ -f /etc/ssh/sshd_config.d/50-cloud-init.conf ]]; then
+		sed -i "s|^#\?PasswordAuthentication .*$|PasswordAuthentication no|" \
+			/etc/ssh/sshd_config.d/50-cloud-init.conf
+	fi
+	
+	echo -e "$OK SSH-password authentification was disabled"
+}
+
 ssh_reload() {
 	#Reload daemon to activate new SSH port
 	sudo systemctl daemon-reload && sudo systemctl restart ssh
@@ -123,6 +137,7 @@ main(){
 	create_user
 	setup_authorized_keys
 	change_default_ssh_port
+	change_password_authentication
 	#ssh_reload
 }
 
