@@ -75,7 +75,7 @@ setup_authorized_keys() {
        [[ "$(stat -c %a "$auth_keys")" == "600" ]] && \
        [[ "$(stat -c %a "$ssh_dir")" == "700" ]]; then
 		sudo nano "$auth_keys"
-        echo "authorized_keys already exists with correct permissions."
+        echo -e "$OK Authorized_keys already exists for $USERNAME with correct permissions."
         return
     fi
 
@@ -87,12 +87,26 @@ setup_authorized_keys() {
     sudo chown -R "$user:$user" "$ssh_dir"
 
     sudo nano "$auth_keys"
+	
+	echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct premissions."
+}
+
+change_default_ssh_port() {
+	#Change default OpenSSH port to custom 10122 port-ssh
+	sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "/etc/ssh/sshd_config"
+
+	#Reload daemon to activate new SSH port
+	sudo systemctl daemon-reload && sudo systemctl restart ssh
+
+	#Show current listening ports
+	echo -e "$OK Default OpenSSH port was changed to $SSHPORT"
 }
 
 main(){
 	update_system
 	create_user
 	setup_authorized_keys
+	change_default_ssh_port
 }
 
 main
