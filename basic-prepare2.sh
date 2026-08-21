@@ -146,10 +146,10 @@ change_permit_root_login() {
 
 set_list_allow_users() {
 	if grep -qxF "AllowUsers $USERNAME" "$sshd_config_path"; then
-		echo "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
+		echo -e "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
 	else
 		echo "AllowUsers $USERNAME" >> "$sshd_config_path"
-		echo "$OK Login was enabled only for $USERNAME"
+		echo -e "$OK Login was enabled only for $USERNAME"
 	fi
 }
 
