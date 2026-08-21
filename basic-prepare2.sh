@@ -17,6 +17,7 @@ SSHPORT="10122"
 SKIPUPDATE=false
 SKIP_SSH_KEY_SETUP=false
 
+UFW_RULES_FILE="/etc/ufw/before.rules"
 sshd_config_path="/etc/ssh/sshd_config"
 
 # Parsing cycle
@@ -141,16 +142,51 @@ change_permit_root_login() {
 	sed -i "s|^#\?PermitRootLogin .*$|PermitRootLogin no|" \
 		/etc/ssh/sshd_config
 		
-	echo -e "$OK\tRoot login was disabled."
+	echo -e "$OK Root login was disabled."
 }
 
 set_list_allow_users() {
 	if grep -qxF "AllowUsers $USERNAME" "$sshd_config_path"; then
-		echo -e "$WARNING\tAllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
+		echo -e "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
 	else
 		echo "AllowUsers $USERNAME" >> "$sshd_config_path"
 		echo -e "$OK Login was enabled only for $USERNAME"
 	fi
+}
+
+disable_icmp() {
+
+	#Check if threre are ufw on system
+	if ! command -v ufw &>/dev/null; then
+		apt update
+		apt install -y ufw
+	fi
+
+	#Check if rules file exist
+	if [ ! -e $UFW_RULES_FILE ]; then 
+		echo -e "$ERROR $UFW_RULES_FILE does not exist."
+		return
+	fi
+	
+	#Reset ufw setting before setting up
+	sudo ufw --force reset > /dev/null 2>&1
+
+	# Change ACCEPT to DROP in icmp code for INPUT
+	sed -i 's/-A ufw-before-input -p icmp --icmp-type destination-unreachable -j ACCEPT/-A ufw-before-input -p icmp --icmp-type destination-unreachable -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-input -p icmp --icmp-type time-exceeded -j ACCEPT/-A ufw-before-input -p icmp --icmp-type time-exceeded -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-input -p icmp --icmp-type parameter-problem -j ACCEPT/-A ufw-before-input -p icmp --icmp-type parameter-problem -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-input -p icmp --icmp-type echo-request -j ACCEPT/-A ufw-before-input -p icmp --icmp-type echo-request -j DROP/' "$UFW_RULES_FILE"
+
+	#Append a new string to rules
+	sed -i '/-A ufw-before-input -p icmp --icmp-type echo-request -j DROP/a -A ufw-before-input -p icmp --icmp-type source-quench -j DROP' "$UFW_RULES_FILE"
+
+	# Change ACCEPT to DROP in icmp code for FORWARD
+	sed -i 's/-A ufw-before-forward -p icmp --icmp-type destination-unreachable -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type destination-unreachable -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-forward -p icmp --icmp-type time-exceeded -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type time-exceeded -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-forward -p icmp --icmp-type parameter-problem -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type parameter-problem -j DROP/' "$UFW_RULES_FILE"
+	sed -i 's/-A ufw-before-forward -p icmp --icmp-type echo-request -j ACCEPT/-A ufw-before-forward -p icmp --icmp-type echo-request -j DROP/' "$UFW_RULES_FILE"
+
+	echo -e "$OK Server ping was disabled"
 }
 
 ssh_reload() {
@@ -166,6 +202,7 @@ main(){
 	change_password_authentication
 	change_permit_root_login
 	set_list_allow_users
+	disable_icmp
 	#ssh_reload
 }
 
