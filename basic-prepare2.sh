@@ -88,7 +88,7 @@ setup_authorized_keys() {
 
     sudo nano "$auth_keys"
 	
-	echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct premissions."
+	echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct permissions."
 }
 
 change_default_ssh_port() {
