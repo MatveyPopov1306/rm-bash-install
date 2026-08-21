@@ -9,7 +9,7 @@ RESET='\e[0m'
 
 OK="${GREEN}[OK]${RESET}"
 ERROR="${RED}[ERROR]${RESET}"
-WARNING="${YELLOW}[WARNING]${YELLOW}"
+WARNING="${YELLOW}[WARNING]${RESET}"
 
 USERNAME="admin"
 PASSWORD=''
@@ -46,7 +46,7 @@ done
 update_system(){
 	if [ "$SKIPUPDATE" = true ]; then
 		clear
-		echo -e "$WARNING Skipped update becatuse of parametr --skip-update: $SKIPUPDATE"
+		echo -e "$WARNING Skipped update becatuse of parameter --skip-update: $SKIPUPDATE"
 	else
 		sudo apt update
 		sudo apt upgrade -y
