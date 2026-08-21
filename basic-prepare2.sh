@@ -76,19 +76,18 @@ setup_authorized_keys() {
        [[ "$(stat -c %a "$ssh_dir")" == "700" ]]; then
 		sudo nano "$auth_keys"
         echo -e "$OK Authorized_keys already exists for $USERNAME with correct permissions."
-        return
-    fi
+	else
+		sudo mkdir -p "$ssh_dir"
+    	sudo touch "$auth_keys"
 
-    sudo mkdir -p "$ssh_dir"
-    sudo touch "$auth_keys"
+    	sudo chmod 700 "$ssh_dir"
+    	sudo chmod 600 "$auth_keys"
+    	sudo chown -R "$user:$user" "$ssh_dir"
 
-    sudo chmod 700 "$ssh_dir"
-    sudo chmod 600 "$auth_keys"
-    sudo chown -R "$user:$user" "$ssh_dir"
-
-    sudo nano "$auth_keys"
+    	sudo nano "$auth_keys"
 	
-	echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct permissions."
+		echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct permissions."
+    fi
 }
 
 change_default_ssh_port() {
