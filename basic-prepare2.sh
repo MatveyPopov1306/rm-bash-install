@@ -59,10 +59,9 @@ create_user() {
 	if id "$USERNAME" &>/dev/null; then
 		echo -e "$WARNING User $USERNAME already exists, skipping."
 	else
-		sudo useradd -m -s /bin/bash "$USERNAME" 2>/dev/null || true
-		echo "$USERNAME:$PASSWORD" | sudo chpasswd
-		sudo usermod -aG sudo "$USERNAME"
-		#sudo -iu "$USERNAME"
+    	sudo useradd -m -s /bin/bash "$USERNAME"
+   		echo "$USERNAME:$PASSWORD" | sudo chpasswd
+    	sudo usermod -aG sudo "$USERNAME"
 		echo -e "$OK User $USERNAME was successfully created."
 	fi
 }
