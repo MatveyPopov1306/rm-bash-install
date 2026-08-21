@@ -15,6 +15,7 @@ USERNAME="admin"
 PASSWORD="password"
 SSHPORT="10122"
 SKIPUPDATE=false
+SKIP_SSH_KEY_SETUP=false
 
 # Parsing cycle
 while [[ $# -gt 0 ]]; do
@@ -33,6 +34,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --skip-update)
             SKIPUPDATE=true
+            shift
+            ;;
+        --skip-ssh-key-setup)
+            SKIP_SSH_KEY_SETUP=true
             shift
             ;;
         *)
@@ -67,9 +72,15 @@ create_user() {
 }
 
 setup_authorized_keys() {
-    local user="$USERNAME"
+
+	local user="$USERNAME"
     local ssh_dir="/home/$user/.ssh"
     local auth_keys="$ssh_dir/authorized_keys"
+
+	if [ "$SKIP_SSH_KEY_SETUP" = true ]; then
+		echo -e "$WARNING SSH-key setup was skipped."
+		return
+	fi
 
     if [[ -f "$auth_keys" ]] && \
        [[ "$(stat -c %a "$auth_keys")" == "600" ]] && \
@@ -79,13 +90,10 @@ setup_authorized_keys() {
 	else
 		sudo mkdir -p "$ssh_dir"
     	sudo touch "$auth_keys"
-
     	sudo chmod 700 "$ssh_dir"
     	sudo chmod 600 "$auth_keys"
     	sudo chown -R "$user:$user" "$ssh_dir"
-
     	sudo nano "$auth_keys"
-	
 		echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct permissions."
     fi
 }
