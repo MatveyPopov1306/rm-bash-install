@@ -149,7 +149,7 @@ set_list_allow_users() {
 		echo "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
 	else
 		echo "AllowUsers $USERNAME" >> "$sshd_config_path"
-		echo -e "$OK Login was enabled only for $USERNAME"
+		echo "$OK Login was enabled only for $USERNAME"
 	fi
 }
 
