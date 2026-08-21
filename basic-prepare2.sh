@@ -16,33 +16,32 @@ PASSWORD=''
 SSHPORT="10122"
 SKIPUPDATE=false
 
-#Parsing cycle
+# Parsing cycle
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --username)
             USERNAME="$2"
             shift 2
             ;;
-		--userpassword)
+        --userpassword)
             PASSWORD="$2"
             shift 2
             ;;
-		--sshport)
+        --sshport)
             SSHPORT="$2"
             shift 2
             ;;
-		--skip-update)
-            SKIPUPDATE="$2"
-            shift 2
+        --skip-update)
+            SKIPUPDATE=true
+            shift
             ;;
         *)
-            echo -e "An unknown parameter was passed: $1"
-            echo -e "$ERROR installation was cancelled"
+            echo "An unknown parameter was passed: $1"
+            echo "$ERROR installation was cancelled"
             exit 1
             ;;
     esac
 done
-
 update_system(){
 
 	if [ "$SKIPUPDATE" = true ]; then
