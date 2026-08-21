@@ -106,7 +106,7 @@ main(){
 	update_system
 	create_user
 	setup_authorized_keys
-	change_default_ssh_port
+	#change_default_ssh_port
 }
 
 main
