@@ -62,7 +62,7 @@ create_user() {
 		sudo useradd -m -s /bin/bash "$USERNAME" 2>/dev/null || true
 		echo "$USERNAME:$PASSWORD" | sudo chpasswd
 		sudo usermod -aG sudo "$USERNAME"
-		sudo -iu "$USERNAME"
+		#sudo -iu "$USERNAME"
 		echo -e "$OK User $USERNAME was successfully created."
 	fi
 }
