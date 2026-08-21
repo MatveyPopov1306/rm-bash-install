@@ -135,6 +135,12 @@ change_password_authentication() {
 	echo -e "$OK SSH-password authentification was disabled"
 }
 
+change_permit_root_login() {
+	#Disable root login
+	sed -i "s|^#\?PermitRootLogin .*$|PermitRootLogin no|" \
+		/etc/ssh/sshd_config
+}
+
 ssh_reload() {
 	#Reload daemon to activate new SSH port
 	sudo systemctl daemon-reload && sudo systemctl restart ssh
@@ -146,6 +152,7 @@ main(){
 	setup_authorized_keys
 	change_default_ssh_port
 	change_password_authentication
+	change_permit_root_login
 	#ssh_reload
 }
 
