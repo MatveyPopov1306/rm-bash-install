@@ -42,18 +42,20 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
-update_system(){
 
+update_system(){
 	if [ "$SKIPUPDATE" = true ]; then
+		clear
+		echo -e "$WARNING Skipped update becatuse of parametr --skip-update: $SKIPUPDATE"
+	else
 		sudo apt update
 		sudo apt upgrade -y
 		clear
-		echo -e "$OK System was sucsessfully updated"
+		echo -e "$OK System was sucsessfully updated"		
 	fi
 }
 
 create_user() {
-
 	if id "$USERNAME" &>/dev/null; then
 		echo "$WARNING User $USERNAME already exists, skipping."
 	else
