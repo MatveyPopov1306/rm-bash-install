@@ -91,26 +91,26 @@ setup_authorized_keys() {
 }
 
 change_default_ssh_port() {
+
 	local sshd_cfg_backup="sshd_config_backup"
 	local ssh_path="/etc/ssh/"
 	local sshd_config_path="/etc/ssh/sshd_config"
 	
 	#check is there are any backup version of sshd_config
-	if [ -e "$sshd_config_path" ]; then
+	if [ -e "$ssh_path$sshd_cfg_backup" ]; then
 		echo -e "$OK A backup copy of sshd_config is already exists with name: $ssh_path$sshd_cfg_backup"
 	else
 		cp -p /etc/ssh/sshd_config /etc/ssh/sshd_config_backup
-		echo -e "$OK A backup copy of sshd_config is already exists with name: $ssh_path$sshd_cfg_backup"
+		echo -e "$OK A backup copy of sshd_config was made with name: $ssh_path$sshd_cfg_backup"
 	fi
 
 	#Change default OpenSSH port to custom 10122 port-ssh
-	sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "$sshd_config_path"
-
-	#Reload daemon to activate new SSH port
-	#sudo systemctl daemon-reload && sudo systemctl restart ssh
-
-	#Show current listening ports
-	echo -e "$OK Default OpenSSH port was changed to $SSHPORT"
+	if [ -e "$sshd_config_path" ]; then
+		sed -i "s|^#\?Port .*$|Port ${SSHPORT}|" "$sshd_config_path"
+		echo -e "$OK Default OpenSSH port was changed to $SSHPORT"
+	else
+		echo -e "$ERROR There is no file $sshd_config_path."
+	fi
 }
 
 ssh_reload() {
