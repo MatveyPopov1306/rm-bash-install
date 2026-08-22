@@ -84,7 +84,7 @@ update_system() {
 create_user() {
 
 	#Check if user already exist
-	if [ id "$USERNAME" &>/dev/null ]; then
+	if id "$USERNAME" &>/dev/null; then
 		echo -e "$WARNING User $USERNAME already exists, skipping."
 		return
 	fi
