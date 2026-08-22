@@ -70,7 +70,7 @@ update_system() {
 	#Check if update is skipping
 	if [ "$SKIPUPDATE" = true ]; then
 		echo -e "$WARNING Skipped update becatuse of parameter --skip-update: $SKIPUPDATE"
-		return
+		return 0
 	fi
 	
 	#Update the System
@@ -86,7 +86,7 @@ create_user() {
 	#Check if user already exist
 	if id "$USERNAME" &>/dev/null; then
 		echo -e "$WARNING User $USERNAME already exists, skipping."
-		return
+		return 0
 	fi
 	
 	#Create a user
@@ -106,7 +106,7 @@ setup_authorized_keys() {
 	#Check if ssh-key setup is skipping
 	if [ "$SKIP_SSH_KEY_SETUP" = true ]; then
 		echo -e "$WARNING SSH-key setup was skipped."
-		return
+		return 0
 	fi
 
 	#Check if authorized_keys file is already exist
@@ -115,7 +115,7 @@ setup_authorized_keys() {
        [[ "$(stat -c %a "$ssh_dir")" == "700" ]]; then
 		sudo nano "$auth_keys"
         echo -e "$OK Authorized_keys already exists for $USERNAME with correct permissions."
-		return
+		return 0
     fi
 	
 	#Creating an authorized_keys file
@@ -182,7 +182,7 @@ change_permit_root_login() {
 	#Check if root login was remain to enable
 	if [ "$ALLOW_ROOT_LOGIN" = true ]; then
 		echo -e "$WARNING Root login was remain available by flag: --allow-root-login"
-		return
+		return 0
 	fi
 	
 	#Disable root login
@@ -198,7 +198,7 @@ set_list_allow_users() {
 	#Check if parameter is already exist
 	if grep -qxF "AllowUsers $USERNAME" "$sshd_config_path"; then
 		echo -e "$WARNING AllowUsers $USERNAME already exists as a parameter in $sshd_config_path"
-		return
+		return 0
 	fi
 	
 	#Add a parameter AllowUsers
@@ -272,7 +272,7 @@ enable_fail2ban() {
 
 	if [ "$SKIP_SSH_KEY_SETUP" = true ]; then
 		echo -e "$WARNING SSH-key setup was skipped."
-		return
+		return 0
 	fi
 
 	#Check if threre are fail2ban on system
@@ -287,7 +287,7 @@ enable_fail2ban() {
 	if [ -e $f2b_conf_path ]; then
 		if [ -e $f2b_localconf_path ]; then
 			echo -e "$WARNING File $f2b_localconf_path is already exist."
-			return
+			return 0
 		fi
 	else
 		echo -e "$ERROR No config file $f2b_conf_path. Abort installation."
