@@ -310,7 +310,7 @@ enable_fail2ban() {
 
 ssh_display_parameters() {
 
-	sudo sshd -T | egrep "allowusers|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|authenticationmethods|permitrootlogin"
+	sudo sshd -T | egrep "allowusers|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|permitrootlogin"
 	
 }
 
