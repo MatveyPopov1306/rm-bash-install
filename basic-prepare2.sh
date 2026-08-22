@@ -168,14 +168,14 @@ change_password_authentication() {
 	echo -e "$OK SSH-password authentification was disabled"
 	
 	#Check if parameter AuthenticationMethods is already exist
-	if grep -qxF "AuthenticationMethods publickey" "$sshd_config_path"; then
-		echo -e "$WARNING AuthenticationMethods publickey already exists as a parameter of $sshd_config_path"
-		return 0
-	fi
+	#if grep -qxF "AuthenticationMethods publickey" "$sshd_config_path"; then
+		#echo -e "$WARNING AuthenticationMethods publickey already exists as a parameter of $sshd_config_path"
+		#return 0
+	#fi
 	
 	#Adds a line AuthenticationMethods publickey after PasswordAuthentication line
-	echo "AuthenticationMethods publickey" >> "$sshd_config_path"
-	echo -e "$OK AuthenticationMethods was changed on on publickey"
+	#echo "AuthenticationMethods publickey" >> "$sshd_config_path"
+	#echo -e "$OK AuthenticationMethods was changed on on publickey"
 
 }
 
@@ -305,15 +305,22 @@ enable_fail2ban() {
 	sudo systemctl restart fail2ban
 	
 	echo -e "$OK Fail2ban was configured and enabled (custom configuration file is $f2b_localconf_path)"
+	
 }
 
 ssh_display_parameters() {
+
 	sudo sshd -T | egrep "allowusers|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|authenticationmethods|permitrootlogin"
+	
 }
 
 ssh_reload() {
+
 	#Reload daemon to activate new SSH port
+	sudo sshd -t
 	sudo systemctl daemon-reload && sudo systemctl restart ssh
+	echo -e "$OK sshd_config file was validated and applied"
+	
 }
 
 main(){
