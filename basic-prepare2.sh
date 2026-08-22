@@ -13,9 +13,9 @@ ERROR="${RED}[ERROR]${RESET}"
 WARNING="${YELLOW}[WARNING]${RESET}"
 
 USERNAME="admin"
-PASSWORD="password"
+PASSWORD='password'
 SSHPORT="10122"
-SSH_PUBLIC_KEY=""
+SSH_PUBLIC_KEY=''
 
 # installation flags
 ALLOW_ROOT_LOGIN=false
