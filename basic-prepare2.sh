@@ -75,7 +75,7 @@ update_system() {
 	
 	#Update the System
 	sudo apt update
-	sudo apt upgrade -y
+	sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 	clear
 	echo -e "$OK System was sucsessfully updated"
 	
@@ -282,7 +282,7 @@ enable_fail2ban() {
 		echo -e "$OK Fail2ban is already installed"
 	else
 		echo -e "$WARNING Installing Fail2ban..."
-		sudo apt install -y fail2ban
+		sudo apt install -qq fail2ban > /dev/null 2>&1
 	fi
 	
 	#Check if fail2ban is already configured
@@ -340,7 +340,7 @@ main(){
 	disable_icmp
 	enable_ufw
 	enable_fail2ban
-	#ssh_reload
+	ssh_reload
 }
 
 main
