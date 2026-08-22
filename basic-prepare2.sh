@@ -293,7 +293,7 @@ enable_fail2ban() {
 		echo -e "$OK Fail2ban is already installed"
 	else
 		echo -e "$WARNING Installing Fail2ban..."
-		sudo apt install -qq fail2ban > /dev/null 2>&1
+		sudo apt install -y fail2ban > /dev/null 2>&1
 	fi
 	
 	#Check if fail2ban is already configured
