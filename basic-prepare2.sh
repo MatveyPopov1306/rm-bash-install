@@ -183,7 +183,7 @@ change_permit_root_login() {
 	
 	#Check if root login was remain to enable
 	if [ "$ALLOW_ROOT_LOGIN" = true ]; then
-		sed -i "s|^#\?PermitRootLogin .*$|PermitRootLogin yes|" \
+		sed -i "s|^PermitRootLogin .*$|PermitRootLogin yes|" \
 		/etc/ssh/sshd_config
 		echo -e "$WARNING Root login was remain available by flag: --allow-root-login"
 		return 0
