@@ -289,7 +289,6 @@ enable_fail2ban() {
 	if [ -e $f2b_conf_path ]; then
 		if [ -e $f2b_localconf_path ]; then
 			echo -e "$WARNING File $f2b_localconf_path is already exist."
-			return 0
 		fi
 	else
 		echo -e "$ERROR No config file $f2b_conf_path. Abort installation."
