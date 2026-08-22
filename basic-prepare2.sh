@@ -165,16 +165,18 @@ change_password_authentication() {
 			/etc/ssh/sshd_config.d/50-cloud-init.conf
 	fi
 	
-	#Adds a line AuthenticationMethods publickey after PasswordAuthentication line
-	if grep -qE '^[[:space:]]*AuthenticationMethods[[:space:]]+publickey[[:space:]]*$' "$sshd_config"; then
-		echo -e "$OK AuthenticationMethods publickey already exists."
-	else
-		sed -i '/^[[:space:]]*PasswordAuthentication[[:space:]]\+no[[:space:]]*$/a AuthenticationMethods publickey' "$$sshd_config"
-		echo -e "$OK AuthenticationMethods publickey added in $sshd_config"
-	fi
-	
 	echo -e "$OK SSH-password authentification was disabled"
 	
+	#Check if parameter AuthenticationMethods is already exist
+	if grep -qxF "AuthenticationMethods publickey" "$sshd_config_path"; then
+		echo -e "$WARNING AuthenticationMethods publickey already exists as a parameter of $sshd_config_path"
+		return 0
+	fi
+	
+	#Adds a line AuthenticationMethods publickey after PasswordAuthentication line
+	echo "AuthenticationMethods publickey" >> "$sshd_config_path"
+	echo -e "$OK AuthenticationMethods was changed on on publickey"
+
 }
 
 change_permit_root_login() {
@@ -204,8 +206,6 @@ set_list_allow_users() {
 	#Add a parameter AllowUsers
 	echo "AllowUsers $USERNAME" >> "$sshd_config_path"
 	echo -e "$OK Login was enabled only for $USERNAME"
-
-	#sudo sshd -T | egrep "allowusers|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|authenticationmethods|permitrootlogin"
 	
 }
 
@@ -270,13 +270,13 @@ enable_fail2ban() {
 	local f2b_conf_path="/etc/fail2ban/jail.conf"
 	local f2b_localconf_path="/etc/fail2ban/jail.local"
 
-	if [ "$SKIP_SSH_KEY_SETUP" = true ]; then
-		echo -e "$WARNING SSH-key setup was skipped."
+	if [ "$SKIP_FAIL2BAN_SETUP" = true ]; then
+		echo -e "$WARNING Fail2ban setup was skipped by flag --skip-fail2ban-setup"
 		return 0
 	fi
 
 	#Check if threre are fail2ban on system
-	if [ ! command -v fail2ban-client &>/dev/null ]; then
+	if command -v fail2ban-client &>/dev/null; then
 		echo -e "$OK Fail2ban is already installed"
 	else
 		echo -e "$WARNING Installing Fail2ban..."
@@ -306,6 +306,10 @@ enable_fail2ban() {
 	echo -e "$OK Fail2ban was configured and enabled (custom configuration file is $f2b_localconf_path)"
 }
 
+ssh_display_parameters() {
+	sudo sshd -T | egrep "allowusers|passwordauthentication|kbdinteractiveauthentication|pubkeyauthentication|authenticationmethods|permitrootlogin"
+}
+
 ssh_reload() {
 	#Reload daemon to activate new SSH port
 	sudo systemctl daemon-reload && sudo systemctl restart ssh
@@ -323,6 +327,7 @@ main(){
 	change_password_authentication
 	change_permit_root_login
 	set_list_allow_users
+	ssh_display_parameters
 	check_ufw_exist
 	disable_icmp
 	enable_ufw
