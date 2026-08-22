@@ -166,11 +166,11 @@ change_password_authentication() {
 	fi
 	
 	#Adds a line AuthenticationMethods publickey after PasswordAuthentication line
-	if grep -qE '^[[:space:]]*AuthenticationMethods[[:space:]]+publickey[[:space:]]*$' "$SSHD_CONFIG"; then
-		echo "$OK AuthenticationMethods publickey already exists."
+	if grep -qE '^[[:space:]]*AuthenticationMethods[[:space:]]+publickey[[:space:]]*$' "$sshd_config"; then
+		echo -e "$OK AuthenticationMethods publickey already exists."
 	else
-		sed -i '/^[[:space:]]*PasswordAuthentication[[:space:]]\+no[[:space:]]*$/a AuthenticationMethods publickey' "$SSHD_CONFIG"
-		echo "$OK AuthenticationMethods publickey added in $ssh/sshd_config"
+		sed -i '/^[[:space:]]*PasswordAuthentication[[:space:]]\+no[[:space:]]*$/a AuthenticationMethods publickey' "$$sshd_config"
+		echo -e "$OK AuthenticationMethods publickey added in $sshd_config"
 	fi
 	
 	echo -e "$OK SSH-password authentification was disabled"
@@ -276,10 +276,10 @@ enable_fail2ban() {
 	fi
 
 	#Check if threre are fail2ban on system
-	if [ dpkg -l | grep -q "^ii  fail2ban" ]; then
-		echo "$OK Fail2ban is already installed"
+	if [ ! command -v fail2ban-client &>/dev/null ]; then
+		echo -e "$OK Fail2ban is already installed"
 	else
-		echo "$WARNING Installing Fail2ban..."
+		echo -e "$WARNING Installing Fail2ban..."
 		sudo apt install -y fail2ban
 	fi
 	
