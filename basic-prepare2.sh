@@ -15,6 +15,7 @@ WARNING="${YELLOW}[WARNING]${RESET}"
 USERNAME="admin"
 PASSWORD="password"
 SSHPORT="10122"
+SSH_PUBLIC_KEY=""
 
 # installation flags
 ALLOW_ROOT_LOGIN=false
@@ -39,6 +40,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --sshport)
             SSHPORT="$2"
+            shift 2
+            ;;
+        --ssh-publickey)
+            SSH_PUBLIC_KEY="$2"
             shift 2
             ;;
         --skip-update)
@@ -124,7 +129,13 @@ setup_authorized_keys() {
 	sudo chmod 700 "$ssh_dir"
 	sudo chmod 600 "$auth_keys"
 	sudo chown -R "$user:$user" "$ssh_dir"
-	sudo nano "$auth_keys"
+	
+	if [ -z "$SSH_PUBLIC_KEY" ]; then
+		echo "$SSH_PUBLIC_KEY" >> $auth_keys
+	else
+		sudo nano "$auth_keys"
+	fi
+	
 	echo -e "$OK Authorized_keys was successfully created for $USERNAME with correct permissions."
 	
 }
