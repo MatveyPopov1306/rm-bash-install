@@ -15,7 +15,7 @@ WARNING="${YELLOW}[WARNING]${RESET}"
 USERNAME="admin"
 PASSWORD='password'
 SSHPORT="10122"
-SSH_PUBLIC_KEY=''
+SSH_PUBLIC_KEY=""
 
 # installation flags
 ALLOW_ROOT_LOGIN=false
@@ -225,12 +225,12 @@ set_list_allow_users() {
 check_ufw_exist() {
 
 	#Check if threre are ufw on system
-	if [ ! command -v ufw &>/dev/null ]; then
+	if ! command -v ufw &>/dev/null; then
 		apt install -y ufw
 	fi
 
 	#Check if rules file exist
-	if [ ! -e $UFW_RULES_FILE ]; then 
+	if [ ! -f "$UFW_RULES_FILE" ]; then 
 		echo -e "$ERROR $UFW_RULES_FILE does not exist."
 		exit 1
 	fi
