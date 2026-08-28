@@ -22,6 +22,7 @@ sudo apt install fail2ban -y
 sudo apt install speedtest-cli -y
 
 sudo curl -fsSL https://get.docker.com | sh
+sudo apt-get install cron socat
 
 }
 
