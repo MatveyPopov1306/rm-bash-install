@@ -21,7 +21,7 @@ sudo apt install ufw -y
 sudo apt install fail2ban -y
 sudo apt install speedtest-cli -y
 
-sudo apt install docker -y
+sudo curl -fsSL https://get.docker.com | sh
 
 }
 
