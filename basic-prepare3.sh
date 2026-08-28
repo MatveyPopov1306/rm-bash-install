@@ -19,7 +19,9 @@ sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y -o Dpkg::Options::="--force-c
 
 sudo apt install ufw -y
 sudo apt install fail2ban -y
-sudo apt install speedtest-cli
+sudo apt install speedtest-cli -y
+
+sudo apt install docker -y
 
 }
 
